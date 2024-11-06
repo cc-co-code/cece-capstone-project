@@ -1,11 +1,20 @@
 html,
 body {
+  height: 100%;
   background-color: #5e51e9;
   font-size: 16px;
   margin: 0;
   padding: 0;
 }
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Stellt sicher, dass der Container die volle Höhe einnimmt */
+}
 
+.content {
+  flex: 1; /* Der Hauptinhalt füllt den mittleren Platz zwischen Header und Footer */
+}
 .header {
   display: flex;
   justify-content: space-between;
@@ -90,5 +99,41 @@ body {
 
   .header-search {
     font-size: 18px;
+  }
+}
+
+.footer {
+  background-color: #5e51e9;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #ffff;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-text {
+  font-size: 14px;
+}
+
+/* Anpassungen für größere Bildschirme */
+@media (min-width: 768px) {
+  .footer-links {
+    flex-direction: row;
+    justify-content: center;
   }
 }
