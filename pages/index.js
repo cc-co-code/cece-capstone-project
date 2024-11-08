@@ -3,10 +3,12 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import WelcomeText from "@/src/components/WelcomeText";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import Button from "@/src/components/Button";
 import ArticlePreview from "@/src/components/ArticlePreview";
 
 const LandingPage = () => {
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const handleResourcesClick = () => {
@@ -14,7 +16,7 @@ const LandingPage = () => {
   };
 
   const handleCommunityClick = () => {
-    if (isLoggedIn) {
+    if (status === "authenticated") {
       router.push("/community");
     } else {
       router.push("/login");
