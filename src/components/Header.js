@@ -1,5 +1,6 @@
 import React from "react";
 import useAppStore from "./store/useAppStore";
+import Link from "next/link";
 
 import {
   MagnifyingGlassIcon,
@@ -21,12 +22,11 @@ const Header = () => {
       <h1 className="header-logo">ALBY</h1>
 
       <div className="header-controls">
-        <button
-          className="header-profile"
-          onClick={() => console.log("Navigate to Profile")}
-        >
-          <UserIcon className="icon" height={24} width={24} />
-        </button>
+        <Link href="/login">
+          <button className="header-profile">
+            <UserIcon className="icon" height={24} width={24} />
+          </button>
+        </Link>
 
         <button className="header-language-toggle" onClick={toggleLanguage}>
           <GlobeAltIcon className="icon" height={24} width={24} />

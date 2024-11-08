@@ -727,6 +727,23 @@ button:hover {
   }
 }
 
+.login-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.login-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.5rem;
+}
+
 /* Footer */
 .footer {
   background-color: var(--background-dark);
