@@ -1,6 +1,7 @@
 import React from "react";
 import useAppStore from "./store/useAppStore";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 import {
   MagnifyingGlassIcon,
@@ -23,7 +24,7 @@ const Header = () => {
 
       <div className="header-controls">
         <Link href="/login">
-          <button className="header-profile">
+          <button onClick={() => signIn()} className="header-profile">
             <UserIcon className="icon" height={24} width={24} />
           </button>
         </Link>
