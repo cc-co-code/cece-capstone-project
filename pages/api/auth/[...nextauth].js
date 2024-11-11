@@ -4,9 +4,6 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import dbConnect from "@/lib/mongodb";
 import GoogleProvider from "next-auth/providers/google";
 
-console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET);
-
 export default NextAuth({
   providers: [
     EmailProvider({
@@ -16,13 +13,6 @@ export default NextAuth({
     GoogleProvider({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "consent", // Zeigt jedes Mal eine Bestätigungsaufforderung an
-          access_type: "offline", // Fordert einen Refresh Token an, damit die Sitzung aufrecht erhalten bleibt
-          response_type: "code", // Spezifischer Response-Type für Authentifizierung
-        },
-      },
     }),
   ],
   adapter: MongoDBAdapter(

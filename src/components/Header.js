@@ -1,6 +1,5 @@
 import React from "react";
 import useAppStore from "./store/useAppStore";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
 
 import {
@@ -23,11 +22,9 @@ const Header = () => {
       <h1 className="header-logo">ALBY</h1>
 
       <div className="header-controls">
-        <Link href="/login">
-          <button onClick={() => signIn()} className="header-profile">
-            <UserIcon className="icon" height={24} width={24} />
-          </button>
-        </Link>
+        <button onClick={() => signIn("google")} className="header-profile">
+          <UserIcon className="icon" height={24} width={24} />
+        </button>
 
         <button className="header-language-toggle" onClick={toggleLanguage}>
           <GlobeAltIcon className="icon" height={24} width={24} />

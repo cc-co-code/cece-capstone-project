@@ -19,7 +19,7 @@ const LandingPage = () => {
     if (status === "authenticated") {
       router.push("/community");
     } else {
-      signIn();
+      signIn("google");
     }
   };
 
