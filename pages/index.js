@@ -16,9 +16,18 @@ const LandingPage = () => {
   };
 
   const handleCommunityClick = () => {
+    console.log("Button clicked, checking status...");
+
+    if (status === "loading") {
+      console.log("Authentication status is loading...");
+      return;
+    }
+
     if (status === "authenticated") {
+      console.log("User is authenticated, navigating to /community");
       router.push("/community");
     } else {
+      console.log("User not authenticated, redirecting to sign-in page");
       signIn();
     }
   };
@@ -33,7 +42,10 @@ const LandingPage = () => {
             text="Resources & Articles"
             onClick={() => router.push("/resources")}
           />
-          <Button text="Community Stories" onClick={handleCommunityClick} />
+          <Button
+            text="Community Stories"
+            onClick={() => signIn({ callbackUrl: "/community" })}
+          />
         </div>
         <section className="articles">
           <ArticlePreview
