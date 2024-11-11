@@ -22,7 +22,7 @@ const Header = () => {
       <h1 className="header-logo">ALBY</h1>
 
       <div className="header-controls">
-        <button onClick={() => signIn("google")} className="header-profile">
+        <button onClick={() => signIn()} className="header-profile">
           <UserIcon className="icon" height={24} width={24} />
         </button>
 
