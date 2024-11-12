@@ -7,27 +7,33 @@ function BlogPostCard({
   city,
   year,
   age,
-  postID,
+  postId,
   initialComments = [],
 }) {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState(initialComments);
 
+  console.log("postId in BlogPostCard:", postId); // Debugging
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`/api/blogposts/${postID}/comments`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ comment: newComment }),
-    });
+    try {
+      const response = await fetch(`/api/blogposts/${postId}/comments`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ comment: newComment }),
+      });
 
-    if (response.ok) {
+      if (!response.ok) throw new Error("Failed to add comment");
+
       const updatedComments = await response.json();
       setComments(updatedComments);
       setNewComment("");
+    } catch (error) {
+      console.error("Error posting comment:", error);
     }
   };
 
@@ -51,7 +57,7 @@ function BlogPostCard({
         </p>
       )}
 
-      <div className="comment-section">
+      <div className="comments-section">
         <h3>Comments</h3>
         {comments.map((comment, index) => (
           <p key={index}>{comment.text}</p>

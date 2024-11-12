@@ -51,8 +51,8 @@ export default function CommunityStories() {
             city={post.city}
             year={post.year}
             age={post.age}
-            postId={post._id}
-            initialComments={post.comments || []}
+            postId={post._id} // Übergebe die ID des Blogposts korrekt
+            initialComments={post.comments || []} // Übergebe die initialen Kommentare, falls vorhanden
           />
         ))}
       </section>
