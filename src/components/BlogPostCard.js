@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 function BlogPostCard({
   title,
@@ -12,8 +11,6 @@ function BlogPostCard({
 }) {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState(initialComments);
-
-  console.log("postId in BlogPostCard:", postId); // Debugging
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +34,25 @@ function BlogPostCard({
     }
   };
 
+  async function handleDeleteComment(commentId) {
+    const response = await fetch(`/api/blogposts/${postId}/comments`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ commentId }), // Übergibt die commentId im Body
+    });
+
+    if (response.ok) {
+      // Kommentar aus dem State entfernen
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== commentId)
+      );
+    } else {
+      console.error("Error deleting comment");
+    }
+  }
+
   return (
     <div className="blog-post-card">
       <h2>{title}</h2>
@@ -59,8 +75,13 @@ function BlogPostCard({
 
       <div className="comments-section">
         <h3>Comments</h3>
-        {comments.map((comment, index) => (
-          <p key={index}>{comment.text}</p>
+        {comments.map((comment) => (
+          <div key={comment._id} className="comment">
+            <p>{comment.text}</p>
+            <button onClick={() => handleDeleteComment(comment._id)}>
+              Delete
+            </button>
+          </div>
         ))}
 
         <form onSubmit={handleCommentSubmit}>

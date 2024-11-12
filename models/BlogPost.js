@@ -7,7 +7,16 @@ const blogPostSchema = new mongoose.Schema({
   year: { type: Number },
   age: { type: Number },
   createdAt: { type: Date, default: Date.now },
-  comments: [{ text: String, createdAt: { type: Date, default: Date.now } }],
+  comments: [
+    {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId(),
+      },
+      text: String,
+      createdAt: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 const BlogPost =
