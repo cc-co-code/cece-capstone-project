@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import BlogPostCard from "@/src/components/BlogPostCard";
+import Header from "@/src/components/Header";
+import Footer from "@/src/components/Footer";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -17,6 +19,7 @@ export default function CommunityStories() {
 
   return (
     <div>
+      <Header />
       <section className="info-section">
         <h2>Welcome to Community Stories</h2>
         <p>
@@ -56,6 +59,8 @@ export default function CommunityStories() {
           />
         ))}
       </section>
+
+      <Footer />
     </div>
   );
 }

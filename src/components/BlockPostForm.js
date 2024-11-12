@@ -1,7 +1,11 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import React from "react";
+import Footer from "./Footer";
+import Header from "./Header";
 
 function BlogPostForm() {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [city, setCity] = useState("");
@@ -44,7 +48,19 @@ function BlogPostForm() {
 
   return (
     <div>
+      <section className="into-section">
+        <p>
+          Welcome to Community Stories! Here, you’re invited to share your own
+          experiences if you wish, and read the stories of others. By sharing,
+          we can build a supportive network where voices come together in
+          understanding and empathy. Participation is entirely voluntary—feel
+          free to contribute only what feels comfortable for you.
+        </p>
+      </section>
       {message && <p>{message}</p>}
+      <button onClick={() => router.push("/community-stories")}>
+        Go back to Community Stories
+      </button>
       <form onSubmit={handleSubmit}>
         <label>
           Title:
@@ -89,6 +105,8 @@ function BlogPostForm() {
         </label>
         <button type="submit">Submit Post</button>
       </form>
+
+      <Footer />
     </div>
   );
 }
