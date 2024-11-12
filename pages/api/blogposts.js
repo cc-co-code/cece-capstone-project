@@ -1,25 +1,12 @@
 import dbConnect from "@/lib/mongodb";
-import mongoose from "mongoose";
-
-const blogPostSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  content: { type: String, required: true },
-  city: { type: String },
-  year: { type: Number },
-  age: { type: Number },
-  createdAt: { type: Date, default: Date.now },
-});
-
-const BlogPost =
-  mongoose.models.BlogPost || mongoose.model("BlogPost", blogPostSchema);
+import BlogPost from "../../models/BlogPost";
 
 export default async function handler(req, res) {
-  await dbConnect(); // Ensure connection is established
+  await dbConnect();
 
   if (req.method === "POST") {
+    const { title, content, city, year, age } = req.body;
     try {
-      const { title, content, city, year, age } = req.body;
-
       const newBlogPost = new BlogPost({
         title,
         content,
@@ -27,9 +14,7 @@ export default async function handler(req, res) {
         year,
         age,
       });
-
       await newBlogPost.save();
-
       res
         .status(201)
         .json({ message: "Post successfully created!", newBlogPost });
@@ -37,7 +22,16 @@ export default async function handler(req, res) {
       console.error(error);
       res.status(500).json({ message: "Error creating the post." });
     }
+  } else if (req.method === "GET") {
+    try {
+      const blogPosts = await BlogPost.find({});
+      res.status(200).json(blogPosts);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error fetching posts." });
+    }
   } else {
+    res.setHeader("Allow", ["GET", "POST"]);
     res.status(405).json({ message: "Method not allowed" });
   }
 }

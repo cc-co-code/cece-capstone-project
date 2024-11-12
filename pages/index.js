@@ -13,6 +13,7 @@ const LandingPage = () => {
 
   const handleResourcesClick = () => {
     console.log("Navigate to Resources & Articles");
+    router.push("/resources");
   };
 
   const handleCommunityClick = () => {
@@ -24,11 +25,11 @@ const LandingPage = () => {
     }
 
     if (status === "authenticated") {
-      console.log("User is authenticated, navigating to /community");
-      router.push("/community");
+      console.log("User is authenticated, navigating to /community-stories");
+      router.push("/community-stories");
     } else {
       console.log("User not authenticated, redirecting to sign-in page");
-      signIn();
+      signIn({ callbackUrl: "/community-stories" });
     }
   };
 
@@ -38,13 +39,10 @@ const LandingPage = () => {
       <main className="content">
         <WelcomeText />
         <div className="button-container">
-          <Button
-            text="Resources & Articles"
-            onClick={() => router.push("/resources")}
-          />
+          <Button text="Resources & Articles" onClick={handleResourcesClick} />
           <Button
             text="Community Stories"
-            onClick={() => signIn({ callbackUrl: "/community" })}
+            onClick={handleCommunityClick} // Uses handleCommunityClick for dynamic redirect
           />
         </div>
         <section className="articles">
@@ -58,7 +56,7 @@ const LandingPage = () => {
             excerpt="An overview of mental health aspects and support systems available for women post-abortion..."
             link="https://example.com/article2"
           />
-          {/* Weitere Artikel können hier hinzugefügt werden */}
+          {/* Additional articles can be added here */}
         </section>
       </main>
       <Footer />
