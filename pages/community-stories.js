@@ -17,7 +17,6 @@ export default function CommunityStories() {
 
   return (
     <div>
-      {/* Welcome/Info Text */}
       <section className="info-section">
         <h2>Welcome to Community Stories</h2>
         <p>
@@ -27,7 +26,6 @@ export default function CommunityStories() {
         <button onClick={handleCreatePost}>Create New Post</button>
       </section>
 
-      {/* Filter Bar */}
       <div className="filter-bar">
         <label>
           City:
@@ -44,14 +42,18 @@ export default function CommunityStories() {
         <button>Apply Filters</button>
       </div>
 
-      {/* Blogposts Section */}
       <section className="blogposts-section">
         {blogPosts.map((post) => (
-          <div className="blogpost-card" key={post._id}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-            {/* Optional: Add other post details here, like city, year, etc. */}
-          </div>
+          <BlogPostCard
+            key={post._id}
+            title={post.title}
+            content={post.content}
+            city={post.city}
+            year={post.year}
+            age={post.age}
+            postId={post._id} // Übergebe die ID des Blogposts korrekt
+            initialComments={post.comments || []} // Übergebe die initialen Kommentare, falls vorhanden
+          />
         ))}
       </section>
     </div>
