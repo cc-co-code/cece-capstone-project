@@ -294,7 +294,6 @@ button:hover {
   padding: 0.5rem;
 }
 
-/* Filter Bar Above Blogposts */
 .filter-bar {
   display: flex;
   gap: 1rem;
@@ -322,7 +321,6 @@ button:hover {
   color: var(--text-light);
 }
 
-/* Blogpost Cards */
 .blogposts-section {
   display: grid;
   grid-template-columns: 1fr;
@@ -331,10 +329,7 @@ button:hover {
 
 @media (min-width: 768px) {
   .blogposts-section {
-    grid-template-columns: repeat(
-      2,
-      1fr
-    ); /* Zwei Karten nebeneinander auf größeren Bildschirmen */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -362,6 +357,46 @@ button:hover {
   font-size: 1rem;
   color: var(--text-light);
   line-height: 1.6;
+}
+
+.comments-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--background-light);
+  border-radius: 8px;
+}
+
+.comments-section h3 {
+  color: var(--secondary);
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.comments-section p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.comments-section form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.comments-section input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+}
+
+.comments-section button {
+  padding: 8px 12px;
+  background-color: var(--highlight);
+  border: none;
+  border-radius: 5px;
+  color: var(--text-dark);
+  cursor: pointer;
 }
 
 /* Footer */
