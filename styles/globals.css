@@ -354,11 +354,17 @@ button:hover {
   color: var(--primary);
   margin-bottom: 0.5rem;
 }
-
-.blog-post-card p {
+.blog-post-card section {
   font-size: 1rem;
   color: var(--text-light);
   line-height: 1.6;
+  margin-bottom: 20px;
+}
+.blog-post-card p {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 5px;
 }
 
 .comments-section {

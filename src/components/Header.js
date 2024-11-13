@@ -5,11 +5,14 @@ import {
   GlobeAltIcon,
   ArrowRightEndOnRectangleIcon,
 } from "@heroicons/react/24/outline";
+import { useSession, signIn, signOut } from "next-auth/react";
+useSession;
 
 function Header() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [language, setLanguage] = useState("en");
+  const { data: session } = useSession();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -48,17 +51,25 @@ function Header() {
             Resources
           </button>
 
-          <button
-            onClick={() => navigateAndCloseMenu("/api/auth/signin")}
-            className="dropdown-item"
-          >
-            <ArrowRightEndOnRectangleIcon
-              className="icon"
-              height={18}
-              width={18}
-            />
-            Login
-          </button>
+          {session ? (
+            <button onClick={() => signOut()} className="dropdown-item">
+              <ArrowRightEndOnRectangleIcon
+                className="icon"
+                height={18}
+                width={18}
+              />
+              Logout
+            </button>
+          ) : (
+            <button onClick={() => signIn()} className="dropdown-item">
+              <ArrowRightEndOnRectangleIcon
+                className="icon"
+                height={18}
+                width={18}
+              />
+              Login
+            </button>
+          )}
         </nav>
       )}
     </header>

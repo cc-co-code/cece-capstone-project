@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Router from "next/router";
 
 function BlogPostCard({
   title,
@@ -44,7 +45,6 @@ function BlogPostCard({
     });
 
     if (response.ok) {
-      // Kommentar aus dem State entfernen
       setComments((prevComments) =>
         prevComments.filter((comment) => comment._id !== commentId)
       );
@@ -53,25 +53,50 @@ function BlogPostCard({
     }
   }
 
+  async function handleDeletePost() {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`/api/blogposts/${postId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log("Post deleted successfully");
+        Router.push("/community-stories");
+      } else {
+        console.error("Error deleting post");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  }
+
   return (
     <div className="blog-post-card">
       <h2>{title}</h2>
-      <p>{content}</p>
-      {city && (
-        <p>
-          <strong>City:</strong> {city}
-        </p>
-      )}
-      {year && (
-        <p>
-          <strong>Year:</strong> {year}
-        </p>
-      )}
-      {age && (
-        <p>
-          <strong>Age:</strong> {age}
-        </p>
-      )}
+      <section>{content}</section>
+      <div>
+        {city && (
+          <p>
+            <strong>City of Abortion:</strong> {city}
+          </p>
+        )}
+        {year && (
+          <p>
+            <strong>Year of Abortion:</strong> {year}
+          </p>
+        )}
+        {age && (
+          <p>
+            <strong>Age at the time of Abortion:</strong> {age}
+          </p>
+        )}
+      </div>
+      <button onClick={handleDeletePost}>Delete Post</button>
 
       <div className="comments-section">
         <h3>Comments</h3>

@@ -15,6 +15,7 @@ function BlogPostForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    router.push("/community-stories");
 
     // Package form data into an object
     const blogPost = { title, content, city, year, age };
@@ -63,7 +64,7 @@ function BlogPostForm() {
       </button>
       <form onSubmit={handleSubmit}>
         <label>
-          Title:
+          Title (give your post a title):
           <input
             type="text"
             value={title}
@@ -72,7 +73,7 @@ function BlogPostForm() {
           />
         </label>
         <label>
-          Content:
+          Content (your story goes here):
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -80,7 +81,7 @@ function BlogPostForm() {
           />
         </label>
         <label>
-          City:
+          City (where did you get the abortion?):
           <input
             type="text"
             value={city}
@@ -88,7 +89,7 @@ function BlogPostForm() {
           />
         </label>
         <label>
-          Year:
+          Year (what year did you get the abortion?):
           <input
             type="number"
             value={year}
@@ -96,14 +97,14 @@ function BlogPostForm() {
           />
         </label>
         <label>
-          Age:
+          Age (how old were you?):
           <input
             type="number"
             value={age}
             onChange={(e) => setAge(e.target.value)}
           />
         </label>
-        <button type="submit">Submit Post</button>
+        <button type="submit">Submit Post </button>
       </form>
 
       <Footer />

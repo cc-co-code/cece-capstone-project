@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useState } from "react";
 import BlogPostCard from "@/src/components/BlogPostCard";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
@@ -10,12 +11,32 @@ export default function CommunityStories() {
   const { data: blogPosts, error } = useSWR("/api/blogposts", fetcher);
   const router = useRouter();
 
+  const [cityFilter, setCityFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("");
+  const [ageFilter, setAgeFilter] = useState("");
+
   if (error) return <div>Failed to load posts</div>;
   if (!blogPosts) return <div>Loading...</div>;
 
   const handleCreatePost = () => {
     router.push("/create-post");
   };
+
+  // Funktion zum Filtern der Blogposts
+  const filterBlogPosts = () => {
+    return blogPosts.filter((post) => {
+      // City-Filter mit Groß-/Kleinschreibung ignorieren
+      const cityMatch = cityFilter
+        ? post.city.toLowerCase().includes(cityFilter.toLowerCase())
+        : true;
+      const yearMatch = yearFilter ? post.year === parseInt(yearFilter) : true;
+      const ageMatch = ageFilter ? post.age === parseInt(ageFilter) : true;
+
+      return cityMatch && yearMatch && ageMatch;
+    });
+  };
+
+  const filteredBlogPosts = filterBlogPosts();
 
   return (
     <div>
@@ -31,22 +52,37 @@ export default function CommunityStories() {
 
       <div className="filter-bar">
         <label>
-          City:
-          <input type="text" placeholder="Filter by city" />
+          City of Abortion:
+          <input
+            type="text"
+            placeholder="Filter by city"
+            value={cityFilter}
+            onChange={(e) => setCityFilter(e.target.value)}
+          />
         </label>
         <label>
-          Year:
-          <input type="number" placeholder="Filter by year" />
+          Year of Abortion:
+          <input
+            type="number"
+            placeholder="Filter by year"
+            value={yearFilter}
+            onChange={(e) => setYearFilter(e.target.value)}
+          />
         </label>
         <label>
-          Age:
-          <input type="number" placeholder="Filter by age" />
+          Age at Time of Abortion:
+          <input
+            type="number"
+            placeholder="Filter by age"
+            value={ageFilter}
+            onChange={(e) => setAgeFilter(e.target.value)}
+          />
         </label>
-        <button>Apply Filters</button>
+        <button onClick={filterBlogPosts}>Apply Filters</button>
       </div>
 
       <section className="blogposts-section">
-        {blogPosts.map((post) => (
+        {filteredBlogPosts.map((post) => (
           <BlogPostCard
             key={post._id}
             title={post.title}
@@ -54,8 +90,8 @@ export default function CommunityStories() {
             city={post.city}
             year={post.year}
             age={post.age}
-            postId={post._id} // Übergebe die ID des Blogposts korrekt
-            initialComments={post.comments || []} // Übergebe die initialen Kommentare, falls vorhanden
+            postId={post._id}
+            initialComments={post.comments || []}
           />
         ))}
       </section>
