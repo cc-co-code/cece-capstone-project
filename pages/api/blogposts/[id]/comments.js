@@ -12,7 +12,11 @@ export default async function handler(req, res) {
     try {
       const updatedPost = await BlogPost.findByIdAndUpdate(
         id,
-        { $push: { comments: { text: comment, createdAt: new Date() } } },
+        {
+          $push: {
+            comments: { text: comment, authorId, createdAt: new Date() },
+          },
+        },
         { new: true }
       );
       res.status(200).json(updatedPost.comments);

@@ -8,6 +8,8 @@ function BlogPostCard({
   year,
   age,
   postId,
+  authorId, // ID des Verfassers des Posts
+  currentUserId, // ID des aktuellen Benutzers
   initialComments = [],
 }) {
   const [newComment, setNewComment] = useState("");
@@ -22,7 +24,7 @@ function BlogPostCard({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ comment: newComment }),
+        body: JSON.stringify({ comment: newComment, authorId: currentUserId }), // Übergebe die authorId des Kommentars
       });
 
       if (!response.ok) throw new Error("Failed to add comment");
@@ -60,15 +62,24 @@ function BlogPostCard({
     if (!confirmed) return;
 
     try {
+      // Prüfe, ob postId definiert ist
+      if (!postId) {
+        console.error("postId is undefined");
+        return;
+      }
+
       const response = await fetch(`/api/blogposts/${postId}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
         console.log("Post deleted successfully");
         Router.push("/community-stories");
       } else {
-        console.error("Error deleting post");
+        console.error("Error deleting post:", await response.json());
       }
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -96,16 +107,23 @@ function BlogPostCard({
           </p>
         )}
       </div>
-      <button onClick={handleDeletePost}>Delete Post</button>
+
+      {/* Nur für den Verfasser des Blogposts: Delete-Button anzeigen */}
+      {currentUserId === authorId && (
+        <button onClick={handleDeletePost}>Delete Post</button>
+      )}
 
       <div className="comments-section">
         <h3>Comments</h3>
         {comments.map((comment) => (
           <div key={comment._id} className="comment">
             <p>{comment.text}</p>
-            <button onClick={() => handleDeleteComment(comment._id)}>
-              Delete
-            </button>
+            {/* Nur für den Verfasser des Kommentars: Delete-Button anzeigen */}
+            {currentUserId === comment.authorId && (
+              <button onClick={() => handleDeleteComment(comment._id)}>
+                Delete
+              </button>
+            )}
           </div>
         ))}
 
