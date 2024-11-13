@@ -27,7 +27,7 @@ function Header() {
 
   return (
     <header className="header">
-      <h1>ALBY</h1>
+      <h1 className="header-logo">ALBY</h1>
 
       <button className="header-language-toggle" onClick={toggleLanguage}>
         <GlobeAltIcon className="icon" height={24} width={24} />
