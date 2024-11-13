@@ -1,21 +1,39 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useState } from "react";
 import BlogPostCard from "@/src/components/BlogPostCard";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 
+// API-Daten abrufen
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function CommunityStories() {
-  const { data: blogPosts, error } = useSWR("/api/blogposts", fetcher);
+  const { data: blogPosts = [], error } = useSWR("/api/blogposts", fetcher);
   const router = useRouter();
 
-  if (error) return <div>Failed to load posts</div>;
-  if (!blogPosts) return <div>Loading...</div>;
+  const [cityFilter, setCityFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("");
+  const [ageFilter, setAgeFilter] = useState("");
 
-  const handleCreatePost = () => {
-    router.push("/create-post");
+  if (error) return <div>Failed to load posts</div>;
+
+  // Funktion zum Filtern der Blogposts
+  const filterBlogPosts = () => {
+    // Überprüfen, ob blogPosts ein Array ist
+    if (!Array.isArray(blogPosts)) return [];
+
+    return blogPosts.filter((post) => {
+      const cityMatch = cityFilter
+        ? post.city.toLowerCase().includes(cityFilter.toLowerCase())
+        : true;
+      const yearMatch = yearFilter ? post.year === parseInt(yearFilter) : true;
+      const ageMatch = ageFilter ? post.age === parseInt(ageFilter) : true;
+      return cityMatch && yearMatch && ageMatch;
+    });
   };
+
+  const filteredBlogPosts = filterBlogPosts();
 
   return (
     <div>
@@ -26,38 +44,61 @@ export default function CommunityStories() {
           Here you can read about others' experiences and share your own. Click
           the button below to create a new post and contribute to the community!
         </p>
-        <button onClick={handleCreatePost}>Create New Post</button>
+        <button onClick={() => router.push("/create-post")}>
+          Create New Post
+        </button>
       </section>
 
       <div className="filter-bar">
         <label>
-          City:
-          <input type="text" placeholder="Filter by city" />
+          City of Abortion:
+          <input
+            type="text"
+            placeholder="Filter by city"
+            value={cityFilter}
+            onChange={(e) => setCityFilter(e.target.value)}
+          />
         </label>
         <label>
-          Year:
-          <input type="number" placeholder="Filter by year" />
+          Year of Abortion:
+          <input
+            type="number"
+            placeholder="Filter by year"
+            value={yearFilter}
+            onChange={(e) => setYearFilter(e.target.value)}
+          />
         </label>
         <label>
-          Age:
-          <input type="number" placeholder="Filter by age" />
+          Age at Time of Abortion:
+          <input
+            type="number"
+            placeholder="Filter by age"
+            value={ageFilter}
+            onChange={(e) => setAgeFilter(e.target.value)}
+          />
         </label>
-        <button>Apply Filters</button>
+        <button onClick={filterBlogPosts}>Apply Filters</button>
       </div>
 
+      {/* Posts anzeigen, wenn vorhanden */}
       <section className="blogposts-section">
-        {blogPosts.map((post) => (
-          <BlogPostCard
-            key={post._id}
-            title={post.title}
-            content={post.content}
-            city={post.city}
-            year={post.year}
-            age={post.age}
-            postId={post._id} // Übergebe die ID des Blogposts korrekt
-            initialComments={post.comments || []} // Übergebe die initialen Kommentare, falls vorhanden
-          />
-        ))}
+        {filteredBlogPosts.length > 0 ? (
+          filteredBlogPosts.map((post) => (
+            <BlogPostCard
+              key={post._id}
+              title={post.title}
+              content={post.content}
+              city={post.city}
+              year={post.year}
+              age={post.age}
+              postId={post._id}
+              authorId={post.authorId}
+              initialComments={post.comments || []}
+            />
+          ))
+        ) : (
+          <p>No posts found.</p>
+        )}
       </section>
 
       <Footer />

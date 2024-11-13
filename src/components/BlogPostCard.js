@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Router from "next/router";
 
 function BlogPostCard({
   title,
@@ -7,6 +8,8 @@ function BlogPostCard({
   year,
   age,
   postId,
+  authorId, // ID des Verfassers des Posts
+  currentUserId, // ID des aktuellen Benutzers
   initialComments = [],
 }) {
   const [newComment, setNewComment] = useState("");
@@ -21,7 +24,7 @@ function BlogPostCard({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ comment: newComment }),
+        body: JSON.stringify({ comment: newComment, authorId: currentUserId }), // Übergebe die authorId des Kommentars
       });
 
       if (!response.ok) throw new Error("Failed to add comment");
@@ -44,7 +47,6 @@ function BlogPostCard({
     });
 
     if (response.ok) {
-      // Kommentar aus dem State entfernen
       setComments((prevComments) =>
         prevComments.filter((comment) => comment._id !== commentId)
       );
@@ -53,24 +55,62 @@ function BlogPostCard({
     }
   }
 
+  async function handleDeletePost() {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (!confirmed) return;
+
+    try {
+      // Prüfe, ob postId definiert ist
+      if (!postId) {
+        console.error("postId is undefined");
+        return;
+      }
+
+      const response = await fetch(`/api/blogposts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        console.log("Post deleted successfully");
+        Router.push("/community-stories");
+      } else {
+        console.error("Error deleting post:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  }
+
   return (
     <div className="blog-post-card">
       <h2>{title}</h2>
-      <p>{content}</p>
-      {city && (
-        <p>
-          <strong>City:</strong> {city}
-        </p>
-      )}
-      {year && (
-        <p>
-          <strong>Year:</strong> {year}
-        </p>
-      )}
-      {age && (
-        <p>
-          <strong>Age:</strong> {age}
-        </p>
+      <section>{content}</section>
+      <div>
+        {city && (
+          <p>
+            <strong>City of Abortion:</strong> {city}
+          </p>
+        )}
+        {year && (
+          <p>
+            <strong>Year of Abortion:</strong> {year}
+          </p>
+        )}
+        {age && (
+          <p>
+            <strong>Age at the time of Abortion:</strong> {age}
+          </p>
+        )}
+      </div>
+
+      {/* Nur für den Verfasser des Blogposts: Delete-Button anzeigen */}
+      {currentUserId === authorId && (
+        <button onClick={handleDeletePost}>Delete Post</button>
       )}
 
       <div className="comments-section">
@@ -78,9 +118,12 @@ function BlogPostCard({
         {comments.map((comment) => (
           <div key={comment._id} className="comment">
             <p>{comment.text}</p>
-            <button onClick={() => handleDeleteComment(comment._id)}>
-              Delete
-            </button>
+            {/* Nur für den Verfasser des Kommentars: Delete-Button anzeigen */}
+            {currentUserId === comment.authorId && (
+              <button onClick={() => handleDeleteComment(comment._id)}>
+                Delete
+              </button>
+            )}
           </div>
         ))}
 
