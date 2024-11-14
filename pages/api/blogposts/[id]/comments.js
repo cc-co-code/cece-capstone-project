@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   await dbConnect();
 
   if (req.method === "PATCH") {
-    const { comment } = req.body;
+    const { comment, authorId } = req.body;
 
     try {
       const updatedPost = await BlogPost.findByIdAndUpdate(
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     try {
       const updatedPost = await BlogPost.findByIdAndUpdate(
         id,
-        { $pull: { comments: { _id: commentId } } }, // Kommentar per ID entfernen
+        { $pull: { comments: { _id: commentId } } },
         { new: true }
       );
       res.status(200).json(updatedPost.comments);

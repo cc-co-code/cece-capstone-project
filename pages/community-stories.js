@@ -5,7 +5,6 @@ import BlogPostCard from "@/src/components/BlogPostCard";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 
-// API-Daten abrufen
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function CommunityStories() {
@@ -18,9 +17,7 @@ export default function CommunityStories() {
 
   if (error) return <div>Failed to load posts</div>;
 
-  // Funktion zum Filtern der Blogposts
   const filterBlogPosts = () => {
-    // Überprüfen, ob blogPosts ein Array ist
     if (!Array.isArray(blogPosts)) return [];
 
     return blogPosts.filter((post) => {
@@ -80,7 +77,6 @@ export default function CommunityStories() {
         <button onClick={filterBlogPosts}>Apply Filters</button>
       </div>
 
-      {/* Posts anzeigen, wenn vorhanden */}
       <section className="blogposts-section">
         {filteredBlogPosts.length > 0 ? (
           filteredBlogPosts.map((post) => (
