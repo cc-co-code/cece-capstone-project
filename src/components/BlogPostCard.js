@@ -11,6 +11,8 @@ function BlogPostCard({
   age,
   postId,
   authorId,
+  authorUsername,
+  createdAt,
   initialComments = [],
 }) {
   const [newComment, setNewComment] = useState("");
@@ -41,6 +43,7 @@ function BlogPostCard({
         body: JSON.stringify({
           comment: newComment,
           authorId: userId,
+          authorUsername,
         }),
       });
 
@@ -107,6 +110,17 @@ function BlogPostCard({
       <h2>{title}</h2>
       <section>{content}</section>
       <div>
+        <p>
+          <strong>Author:</strong> {authorUsername || "Anonymous"}
+        </p>
+
+        <p>
+          <strong>Posted on:</strong>{" "}
+          {createdAt
+            ? new Date(createdAt).toLocaleDateString()
+            : "Date unavailable"}
+        </p>
+
         {city && (
           <p>
             <strong>City of Abortion:</strong> {city}
@@ -134,8 +148,10 @@ function BlogPostCard({
         {comments.map((comment) => (
           <div key={comment._id} className="comment">
             <p>{comment.text}</p>
-            {console.log("User ID:", session?.user?.userId)}
-            {console.log("Comment Author ID:", comment.authorId)}
+            <div className="comment-meta">
+              <span>Commented by {comment.authorUsername}</span>
+              <span>on {new Date(comment.createdAt).toLocaleDateString()}</span>
+            </div>
             {/* Nur für den Verfasser des Kommentars: Delete-Button anzeigen */}
             {session?.user?.userId === comment.authorId && (
               <button onClick={() => handleDeleteComment(comment._id)}>

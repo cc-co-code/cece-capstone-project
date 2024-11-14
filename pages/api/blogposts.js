@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/mongodb";
 import BlogPost from "@/models/BlogPost";
+import Users from "@/models/Users";
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -12,19 +13,14 @@ export default async function handler(req, res) {
       console.error("Error fetching posts:", error);
       res.status(500).json({ message: "Error fetching posts." });
     }
-  }
-  if (req.method === "POST") {
-    // const session = await getSession({ req });
-    // console.log(session, "session");
-    // if (!session) {
-    //   return res.status(401).json({ error: "Not authenticated" });
-    // }
-
-    console.log(req.body);
+  } else if (req.method === "POST") {
     const { blogPost, session } = req.body;
     const { title, content, city, year, age } = blogPost;
 
     try {
+      const user = await Users.findOne({ userId: session.user.userId });
+      const authorUsername = user ? user.username : "Anonymous";
+
       const newPost = new BlogPost({
         title,
         content,
@@ -32,6 +28,7 @@ export default async function handler(req, res) {
         year,
         age,
         authorId: session.user.userId,
+        authorUsername,
         createdAt: new Date(),
       });
 

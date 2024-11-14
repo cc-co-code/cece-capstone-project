@@ -4,9 +4,9 @@ import React from "react";
 import {
   GlobeAltIcon,
   ArrowRightEndOnRectangleIcon,
+  UserCircleIcon, // Benutzer-Icon importieren
 } from "@heroicons/react/24/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
-useSession;
 
 function Header() {
   const router = useRouter();
@@ -52,14 +52,23 @@ function Header() {
           </button>
 
           {session ? (
-            <button onClick={() => signOut()} className="dropdown-item">
-              <ArrowRightEndOnRectangleIcon
-                className="icon"
-                height={18}
-                width={18}
-              />
-              Logout
-            </button>
+            <>
+              <button
+                onClick={() => navigateAndCloseMenu("/profile")} // Profil-Link hinzufügen
+                className="dropdown-item"
+              >
+                <UserCircleIcon className="icon" height={18} width={18} />
+                Profile
+              </button>
+              <button onClick={() => signOut()} className="dropdown-item">
+                <ArrowRightEndOnRectangleIcon
+                  className="icon"
+                  height={18}
+                  width={18}
+                />
+                Logout
+              </button>
+            </>
           ) : (
             <button onClick={() => signIn()} className="dropdown-item">
               <ArrowRightEndOnRectangleIcon
