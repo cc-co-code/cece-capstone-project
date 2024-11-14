@@ -18,4 +18,10 @@ export default NextAuth({
   adapter: MongoDBAdapter(
     dbConnect().then((mongoose) => mongoose.connection.getClient())
   ), // Verbindung an den Adapter weitergeben
+  callbacks: {
+    async session({ session, user }) {
+      session.user.userId = user.id;
+      return session;
+    },
+  },
 });

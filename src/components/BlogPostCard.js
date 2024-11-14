@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Router from "next/router";
+import { signIn, useSession } from "next-auth/react";
 
 function BlogPostCard({
   title,
@@ -8,12 +9,14 @@ function BlogPostCard({
   year,
   age,
   postId,
-  authorId, // ID des Verfassers des Posts
-  currentUserId, // ID des aktuellen Benutzers
+  authorId,
   initialComments = [],
 }) {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState(initialComments);
+  const { data: session, status } = useSession();
+
+  const userId = session?.user?.userId;
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +27,10 @@ function BlogPostCard({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ comment: newComment, authorId: currentUserId }), // Übergebe die authorId des Kommentars
+        body: JSON.stringify({
+          comment: newComment,
+          authorId: userId,
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to add comment");
@@ -43,7 +49,7 @@ function BlogPostCard({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ commentId }), // Übergibt die commentId im Body
+      body: JSON.stringify({ commentId }),
     });
 
     if (response.ok) {
@@ -62,7 +68,6 @@ function BlogPostCard({
     if (!confirmed) return;
 
     try {
-      // Prüfe, ob postId definiert ist
       if (!postId) {
         console.error("postId is undefined");
         return;
@@ -109,7 +114,7 @@ function BlogPostCard({
       </div>
 
       {/* Nur für den Verfasser des Blogposts: Delete-Button anzeigen */}
-      {currentUserId === authorId && (
+      {session?.user?.userId === authorId && (
         <button onClick={handleDeletePost}>Delete Post</button>
       )}
 
@@ -119,9 +124,9 @@ function BlogPostCard({
           <div key={comment._id} className="comment">
             <p>{comment.text}</p>
             {/* Nur für den Verfasser des Kommentars: Delete-Button anzeigen */}
-            {currentUserId === comment.authorId && (
+            {session?.user?.userId === comment.authorId && (
               <button onClick={() => handleDeleteComment(comment._id)}>
-                Delete
+                Delete Comment
               </button>
             )}
           </div>

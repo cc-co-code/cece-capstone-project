@@ -3,6 +3,7 @@ import { useState } from "react";
 import React from "react";
 import Footer from "./Footer";
 import Header from "./Header";
+import { useSession } from "next-auth/react";
 
 function BlogPostForm() {
   const router = useRouter();
@@ -11,28 +12,26 @@ function BlogPostForm() {
   const [city, setCity] = useState("");
   const [year, setYear] = useState("");
   const [age, setAge] = useState("");
-  const [message, setMessage] = useState(""); // For displaying success or error messages
+  const [message, setMessage] = useState("");
+  const { data: session, status } = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     router.push("/community-stories");
 
-    // Package form data into an object
     const blogPost = { title, content, city, year, age };
 
     try {
-      // Send request to your API to save the blog post
       const response = await fetch("/api/blogposts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(blogPost),
+        body: JSON.stringify({ blogPost, session }),
       });
 
       if (response.ok) {
         setMessage("Post successfully created!");
-        // Reset form
         setTitle("");
         setContent("");
         setCity("");
