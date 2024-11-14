@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Router from "next/router";
 import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 function BlogPostCard({
   title,
@@ -18,6 +19,16 @@ function BlogPostCard({
 
   const userId = session?.user?.userId;
 
+  console.log("session:", session);
+  console.log("userId:", userId);
+  console.log("authorId:", authorId);
+
+  useEffect(() => {
+    // Wenn der Benutzer nicht eingeloggt ist, leite ihn zur Startseite weiter
+    if (!session && status !== "loading") {
+      Router.push("/");
+    }
+  }, [session, status]);
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
@@ -49,7 +60,7 @@ function BlogPostCard({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ commentId }),
+      body: JSON.stringify({ commentId, userId: session?.user?.userId }),
     });
 
     if (response.ok) {
@@ -123,6 +134,8 @@ function BlogPostCard({
         {comments.map((comment) => (
           <div key={comment._id} className="comment">
             <p>{comment.text}</p>
+            {console.log("User ID:", session?.user?.userId)}
+            {console.log("Comment Author ID:", comment.authorId)}
             {/* Nur für den Verfasser des Kommentars: Delete-Button anzeigen */}
             {session?.user?.userId === comment.authorId && (
               <button onClick={() => handleDeleteComment(comment._id)}>

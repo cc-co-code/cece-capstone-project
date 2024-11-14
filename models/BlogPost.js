@@ -10,11 +10,7 @@ const blogPostSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   comments: [
     {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: () => new mongoose.Types.ObjectId(),
-      },
-      text: String,
+      text: { type: String, required: true },
       authorId: { type: String, required: true },
       createdAt: { type: Date, default: Date.now },
     },
