@@ -7,6 +7,7 @@ const blogPostSchema = new mongoose.Schema({
   year: { type: Number },
   age: { type: Number },
   authorId: { type: String, required: true },
+  authorUsername: { type: String },
   createdAt: { type: Date, default: Date.now },
   comments: [
     {

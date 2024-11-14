@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import React from "react";
-import Footer from "./Footer";
-import Header from "./Header";
+
 import { useSession } from "next-auth/react";
 
 function BlogPostForm() {
@@ -48,7 +47,7 @@ function BlogPostForm() {
 
   return (
     <div>
-      <section className="into-section">
+      <section className="intro-section">
         <p>
           Welcome to Community Stories! Here, you’re invited to share your own
           experiences if you wish, and read the stories of others. By sharing,
@@ -105,8 +104,6 @@ function BlogPostForm() {
         </label>
         <button type="submit">Submit Post </button>
       </form>
-
-      <Footer />
     </div>
   );
 }
