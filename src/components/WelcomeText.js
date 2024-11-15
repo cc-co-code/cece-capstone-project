@@ -5,14 +5,19 @@ const WelcomeText = () => {
     <section className="welcome-text">
       <h2>Welcome!</h2>
       <p>
-        No matter who you are or what you are going through, YOU GOT THIS! This
-        is a space for sharing experiences, finding reliable information, and
-        connecting with others.
+        This platform is a space for women and anyone affected, seeking support
+        and information about abortion. At ALBY, we are committed to awareness,
+        solidarity, and empowering your choices. Here, you’ll find helpful
+        articles, personal stories, and opportunities to connect with others.
+        This platform was created to foster empathy and transparency around a
+        topic often shrouded in uncertainties and taboos. No matter where you
+        are in your journey – you are welcome here!
       </p>
+
       <p>
-        Just a little reminder: We are not professionals and are not telling you
-        what to do. This is purely for educational and supporting purposes.
-        Please talk to your healthcare providers for medical support.
+        Disclaimer: ALBY is not run by medical professionals. The information
+        provided here is for general purposes only and should not replace
+        professional advice from qualified healthcare providers.
       </p>
     </section>
   );

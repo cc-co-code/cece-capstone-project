@@ -252,6 +252,65 @@ button:hover {
   transform: scale(1.05);
   background-color: var(--secondary);
 }
+.categories-section {
+  padding: 2rem;
+  background-color: var(--background-light);
+}
+
+.categories-section h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.category-card {
+  background-color: var(--background-dark);
+  color: var(--text-light);
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.category-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-card li {
+  margin: 0.5rem 0;
+}
+
+.category-card a {
+  color: var(--highlight);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.category-card a:hover {
+  text-decoration: underline;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
 
 .article-preview {
   background-color: var(--background-light);
@@ -284,22 +343,26 @@ button:hover {
   }
 }
 
-/* .login-container {
-  max-width: 400px;
-  margin: auto;
-  padding: 2rem;
+.resource-section {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.login-input {
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
+.resource-section h2 {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
 }
 
-.login-button {
-  width: 100%;
-  padding: 0.5rem;
-} */
+.article-preview {
+  margin-bottom: 1.5rem;
+}
+.resource-section:target {
+  border-left: 5px solid var(--secondary);
+  padding-left: 15px;
+  background-color: rgba(132, 115, 227, 0.1);
+}
+
 .info-section {
   background-color: var(--background-light);
   border: 1px solid var(--border-color);
@@ -438,10 +501,10 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .welcome-text {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--secondary);
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: var(--text-light);
   text-align: left;
 }
 
