@@ -59,6 +59,11 @@ body {
   gap: 2rem;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 h1 {
@@ -295,7 +300,14 @@ button:hover {
   width: 100%;
   padding: 0.5rem;
 } */
-
+.info-section {
+  background-color: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 .filter-bar {
   display: flex;
   gap: 1rem;
@@ -336,7 +348,13 @@ button:hover {
 }
 
 .blog-post-card {
-  background-color: var(--background-light);
+  flex: 1;
+  padding: 2rem 1.5rem;
+  max-width: 750px;
+  margin: 0 auto;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 1.5rem;
@@ -469,7 +487,13 @@ button:hover {
   background-color: var(--secondary);
 }
 .intro-section {
-  background-color: var(--background-light);
+  flex: 1;
+  padding: 2rem 1.5rem;
+  max-width: 750px;
+  margin: 0 auto;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 1.5rem;

@@ -40,10 +40,7 @@ const LandingPage = () => {
         <WelcomeText />
         <div className="button-container">
           <Button text="Resources & Articles" onClick={handleResourcesClick} />
-          <Button
-            text="Community Stories"
-            onClick={handleCommunityClick} // Uses handleCommunityClick for dynamic redirect
-          />
+          <Button text="Community Stories" onClick={handleCommunityClick} />
         </div>
         <section className="articles">
           <ArticlePreview

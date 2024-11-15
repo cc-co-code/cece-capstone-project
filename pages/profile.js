@@ -7,7 +7,7 @@ export default function ProfilePage() {
     <div className="page-container">
       <Header />
       <div className="profile-content">
-        <h1>Your Profile</h1>
+        <h2>Your Profile</h2>
         <ProfileForm />
       </div>
       <Footer />
