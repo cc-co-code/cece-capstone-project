@@ -41,7 +41,10 @@ export default function CommunityStories() {
           Here you can read about others' experiences and share your own. Click
           the button below to create a new post and contribute to the community!
         </p>
-        <button onClick={() => router.push("/create-post")}>
+        <button
+          className="button-container"
+          onClick={() => router.push("/create-post")}
+        >
           Create New Post
         </button>
       </section>

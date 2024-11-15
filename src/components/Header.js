@@ -4,9 +4,10 @@ import React from "react";
 import {
   GlobeAltIcon,
   ArrowRightEndOnRectangleIcon,
-  UserCircleIcon, // Benutzer-Icon importieren
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 function Header() {
   const router = useRouter();
@@ -30,7 +31,9 @@ function Header() {
 
   return (
     <header className="header">
-      <h1 className="header-logo">ALBY</h1>
+      <Link href="/" className="header-logo">
+        ALBY
+      </Link>
 
       <button className="header-language-toggle" onClick={toggleLanguage}>
         <GlobeAltIcon className="icon" height={24} width={24} />
@@ -54,7 +57,7 @@ function Header() {
           {session ? (
             <>
               <button
-                onClick={() => navigateAndCloseMenu("/profile")} // Profil-Link hinzufügen
+                onClick={() => navigateAndCloseMenu("/profile")}
                 className="dropdown-item"
               >
                 <UserCircleIcon className="icon" height={18} width={18} />

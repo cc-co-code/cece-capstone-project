@@ -7,7 +7,7 @@ export default function CreatePostPage() {
     <>
       {" "}
       <Header />
-      <h1>Create a new Post</h1>
+      <h2>Create a new Post</h2>
       <BlogPostForm />
       <Footer />
     </>
