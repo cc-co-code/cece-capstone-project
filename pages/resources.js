@@ -67,7 +67,9 @@ const ResourcesPage = () => {
         if (categoryName === "Educational Information") {
           return (
             <div key={categoryName}>
-              <h3 className="more-resources-heading">More Resources</h3>
+              <h3 className="more-resources-heading">
+                More Resources & Articles
+              </h3>
               <section
                 id={categoryName.toLowerCase().replace(" ", "-")}
                 className={`resource-section ${
