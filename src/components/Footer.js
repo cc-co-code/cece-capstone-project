@@ -7,9 +7,9 @@ const Footer = () => {
         <a href="/about">About</a>
         <a href="/contact">Contact</a>
         <a href="/feedback">Feedback</a>
-        <a href="/resources">More Resources</a>
+        <a href="/resources#educational">More Resources</a>
       </div>
-      <p>© 2024 All Rights Reserved </p>
+      <p>© ALBY 2024 All Rights Reserved </p>
     </footer>
   );
 };

@@ -33,6 +33,10 @@ const LandingPage = () => {
     }
   };
 
+  const handleCategoryClick = (category) => {
+    router.push(`/resources?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <div className="page-container">
       <Header />
@@ -45,38 +49,59 @@ const LandingPage = () => {
         <section className="categories-section">
           <h2>Explore Resources</h2>
           <div className="categories-container">
-            {/* Legal and Medical */}
-            <div className="category-card">
-              <h3>Legal and Medical</h3>
+            {/* Legal Aspects */}
+            <div
+              className="category-card"
+              onClick={() => handleCategoryClick("Legal Aspects")}
+            >
+              <h3>Legal Aspects</h3>
               <ArticlePreview
                 title="Understanding Abortion Rights"
                 excerpt="A deep dive into abortion rights..."
                 anchor="/resources#legal"
+                category="Legal Aspects"
               />
+            </div>
+
+            {/* Medical Information */}
+            <div
+              className="category-card"
+              onClick={() => handleCategoryClick("Medical Information")}
+            >
+              <h3>Medical Information</h3>
               <ArticlePreview
-                title="Your Rights Explained"
-                excerpt="Learn about the legal aspects of abortion..."
-                anchor="/resources#legal"
+                title="Understanding Medical Procedures"
+                excerpt="Learn about medical procedures and healthcare options related to abortion..."
+                anchor="/resources#medical"
+                category="Medical Information"
               />
             </div>
 
             {/* Psychological Support */}
-            <div className="category-card">
+            <div
+              className="category-card"
+              onClick={() => handleCategoryClick("Psychological Support")}
+            >
               <h3>Psychological Support</h3>
               <ArticlePreview
                 title="Coping After Abortion"
                 excerpt="Explore emotional support options..."
                 anchor="/resources#psychological"
+                category="Psychological Support"
               />
             </div>
 
             {/* Support Services */}
-            <div className="category-card">
+            <div
+              className="category-card"
+              onClick={() => handleCategoryClick("Support Services")}
+            >
               <h3>Support Services</h3>
               <ArticlePreview
                 title="Counseling Services Near You"
                 excerpt="Find trusted counseling centers..."
                 anchor="/resources#support"
+                category="Support Services"
               />
             </div>
           </div>

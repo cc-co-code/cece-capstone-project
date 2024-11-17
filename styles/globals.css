@@ -362,6 +362,19 @@ button:hover {
   padding-left: 15px;
   background-color: rgba(132, 115, 227, 0.1);
 }
+.resource-section.highlight {
+  background-color: var(--highlight);
+  border: 2px solid var(--primary);
+  padding: 1rem;
+  border-radius: 5px;
+}
+.more-resources-heading {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 2rem 0 1rem;
+  color: var(--text-dark);
+  text-transform: uppercase;
+}
 
 .info-section {
   background-color: var(--background-light);
