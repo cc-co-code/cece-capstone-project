@@ -7,8 +7,9 @@
   --text-light: #333333; /* Dark for light backgrounds */
   --text-dark: #f4f4f9; /* Off-white for dark backgrounds */
   --border-color: #e0e5ec; /* Subtle border color */
-  --font-family: "Inter", sans-serif;
+  --font-family: "M PLUS Rounded 1c", sans-serif;
 }
+
 html {
   scroll-behavior: smooth; /* Enables smooth scrolling for the entire document */
 }
@@ -272,7 +273,7 @@ button:hover {
 }
 
 .category-card {
-  background-color: var(--background-dark);
+  background-color: var(--primary);
   color: var(--text-light);
   border-radius: 8px;
   padding: 1.5rem;
@@ -283,7 +284,7 @@ button:hover {
 }
 
 .category-card h3 {
-  font-size: 1.4rem;
+  font-size: 1.2 rem;
   margin-bottom: 1rem;
 }
 
@@ -350,7 +351,7 @@ button:hover {
 
 .resource-section h2 {
   font-size: 1.5rem;
-  color: var(--secondary);
+  color: var(--primary);
   margin-bottom: 1rem;
 }
 
@@ -372,7 +373,7 @@ button:hover {
   font-size: 1.2rem;
   font-weight: bold;
   margin: 2rem 0 1rem;
-  color: var(--text-dark);
+  color: var(--text-light);
   text-transform: uppercase;
 }
 
