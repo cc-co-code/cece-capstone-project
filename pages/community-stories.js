@@ -42,7 +42,7 @@ export default function CommunityStories() {
           the button below to create a new post and contribute to the community!
         </p>
         <button
-          className="button-container"
+          className="button-uniform"
           onClick={() => router.push("/create-post")}
         >
           Create New Post
@@ -77,7 +77,9 @@ export default function CommunityStories() {
             onChange={(e) => setAgeFilter(e.target.value)}
           />
         </label>
-        <button onClick={filterBlogPosts}>Apply Filters</button>
+        <button className="button-uniform" onClick={filterBlogPosts}>
+          Apply Filters
+        </button>
       </div>
 
       <section className="blogposts-section">

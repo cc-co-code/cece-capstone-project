@@ -39,7 +39,9 @@ export default function ProfileForm() {
             required
           />
         </label>
-        <button type="submit">Save</button>
+        <button type="submit" className="button-uniform">
+          Save
+        </button>
       </form>
     </div>
   );

@@ -140,7 +140,9 @@ function BlogPostCard({
 
       {/* Nur für den Verfasser des Blogposts: Delete-Button anzeigen */}
       {session?.user?.userId === authorId && (
-        <button onClick={handleDeletePost}>Delete Post</button>
+        <button className="button-uniform" onClick={handleDeletePost}>
+          Delete Post
+        </button>
       )}
 
       <div className="comments-section">
@@ -154,7 +156,10 @@ function BlogPostCard({
             </div>
             {/* Nur für den Verfasser des Kommentars: Delete-Button anzeigen */}
             {session?.user?.userId === comment.authorId && (
-              <button onClick={() => handleDeleteComment(comment._id)}>
+              <button
+                className="button-uniform"
+                onClick={() => handleDeleteComment(comment._id)}
+              >
                 Delete Comment
               </button>
             )}
@@ -169,7 +174,9 @@ function BlogPostCard({
             placeholder="Add a comment"
             required
           />
-          <button type="submit">Comment</button>
+          <button type="submit" className="button-uniform">
+            Comment
+          </button>
         </form>
       </div>
     </div>

@@ -57,7 +57,10 @@ function BlogPostForm() {
         </p>
       </section>
       {message && <p>{message}</p>}
-      <button onClick={() => router.push("/community-stories")}>
+      <button
+        className="button-uniform"
+        onClick={() => router.push("/community-stories")}
+      >
         Go back to Community Stories
       </button>
       <form onSubmit={handleSubmit}>
@@ -102,7 +105,9 @@ function BlogPostForm() {
             onChange={(e) => setAge(e.target.value)}
           />
         </label>
-        <button type="submit">Submit Post </button>
+        <button type="submit" className="button-uniform">
+          Submit Post{" "}
+        </button>
       </form>
     </div>
   );
