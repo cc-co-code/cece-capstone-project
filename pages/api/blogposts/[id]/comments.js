@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   await dbConnect();
 
   if (req.method === "PATCH") {
-    const { comment, authorId } = req.body;
+    const { comment, authorId, authorUsername } = req.body;
 
     try {
       const updatedPost = await BlogPost.findByIdAndUpdate(
@@ -19,6 +19,7 @@ export default async function handler(req, res) {
               _id: new mongoose.Types.ObjectId(),
               text: comment,
               authorId,
+              authorUsername,
               createdAt: new Date(),
             },
           },

@@ -46,8 +46,8 @@ function BlogPostForm() {
   };
 
   return (
-    <div>
-      <section className="intro-section">
+    <div className="create-post-page">
+      <section className="info-section">
         <p>
           Welcome to Community Stories! Here, you’re invited to share your own
           experiences if you wish, and read the stories of others. By sharing,
@@ -73,41 +73,43 @@ function BlogPostForm() {
             required
           />
         </label>
-        <label>
-          Content (your story goes here):
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          City (where did you get the abortion?):
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </label>
-        <label>
-          Year (what year did you get the abortion?):
-          <input
-            type="number"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-          />
-        </label>
-        <label>
-          Age (how old were you?):
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </label>
-        <button type="submit" className="button-uniform">
-          Submit Post{" "}
-        </button>
+        <div>
+          <label>
+            Content (your story goes here):
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            City (where did you get the abortion?):
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </label>
+          <label>
+            Year (what year did you get the abortion?):
+            <input
+              type="number"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </label>
+          <label>
+            Age (how old were you?):
+            <input
+              type="number"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </label>
+          <button type="submit" className="button-uniform">
+            Submit Post{" "}
+          </button>
+        </div>
       </form>
     </div>
   );
