@@ -26,7 +26,6 @@ function BlogPostCard({
   console.log("authorId:", authorId);
 
   useEffect(() => {
-    // Wenn der Benutzer nicht eingeloggt ist, leite ihn zur Startseite weiter
     if (!session && status !== "loading") {
       Router.push("/");
     }
