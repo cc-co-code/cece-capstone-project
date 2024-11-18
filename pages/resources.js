@@ -52,68 +52,66 @@ const ResourcesPage = () => {
   return (
     <div className="page-container">
       <Header />
-      <h1>Resources & Articles</h1>
-      <p className="welcome-text">
+      <h2>Resources & Articles</h2>
+      <p className="info-section">
         Welcome to the Resources Section. Here you can browse through curated
         links and external websites to find reliable information, support
         services, and helpful tools related to abortion. Explore the categories
         below to discover resources tailored to your needs.
       </p>
 
-      {sortedCategories.map((categoryName) => {
-        const resources = groupedResources[categoryName];
-        if (!resources) return null; // Überspringe Kategorien ohne Ressourcen
+      <div className="resources-container">
+        {sortedCategories.map((categoryName) => {
+          const resources = groupedResources[categoryName];
+          if (!resources) return null;
 
-        if (categoryName === "Educational Information") {
+          if (categoryName === "Educational Information") {
+            return (
+              <div key={categoryName}>
+                <section
+                  id={categoryName.toLowerCase().replace(" ", "-")}
+                  className={`resource-section ${
+                    activeCategory === categoryName ? "highlight" : ""
+                  }`}
+                >
+                  <h2>{categoryName}</h2>
+                  {resources.map((resource) => (
+                    <ArticlePreview
+                      key={resource._id}
+                      title={resource.title}
+                      excerpt={resource.excerpt}
+                      link={resource.link}
+                    />
+                  ))}
+                </section>
+              </div>
+            );
+          }
+
           return (
-            <div key={categoryName}>
-              <h3 className="more-resources-heading">
-                More Resources & Articles
-              </h3>
-              <section
-                id={categoryName.toLowerCase().replace(" ", "-")}
-                className={`resource-section ${
-                  activeCategory === categoryName ? "highlight" : ""
-                }`}
-              >
-                <h2>{categoryName}</h2>
-                {resources.map((resource) => (
-                  <ArticlePreview
-                    key={resource._id}
-                    title={resource.title}
-                    excerpt={resource.excerpt}
-                    link={resource.link}
-                  />
-                ))}
-              </section>
-            </div>
+            <section
+              key={categoryName}
+              id={categoryName.toLowerCase().replace(" ", "-")}
+              className={`resource-section ${
+                activeCategory === categoryName ? "highlight" : ""
+              }`}
+            >
+              <h2>{categoryName}</h2>
+              {resources.map((resource) => (
+                <ArticlePreview
+                  key={resource._id}
+                  title={resource.title}
+                  excerpt={resource.excerpt}
+                  link={resource.link}
+                />
+              ))}
+            </section>
           );
-        }
-
-        return (
-          <section
-            key={categoryName}
-            id={categoryName.toLowerCase().replace(" ", "-")}
-            className={`resource-section ${
-              activeCategory === categoryName ? "highlight" : ""
-            }`}
-          >
-            <h2>{categoryName}</h2>
-            {resources.map((resource) => (
-              <ArticlePreview
-                key={resource._id}
-                title={resource.title}
-                excerpt={resource.excerpt}
-                link={resource.link}
-              />
-            ))}
-          </section>
-        );
-      })}
+        })}
+      </div>
 
       <Footer />
     </div>
   );
 };
-
 export default ResourcesPage;

@@ -3,12 +3,11 @@ import { useSession } from "next-auth/react";
 
 export default function ProfileForm() {
   const { data: session } = useSession();
-  const [username, setUsername] = useState(""); // Für das Eingabefeld
-  const [savedUsername, setSavedUsername] = useState(""); // Für die Anzeige
+  const [username, setUsername] = useState("");
+  const [savedUsername, setSavedUsername] = useState("");
 
   useEffect(() => {
     if (session?.user?.userId) {
-      // Abrufen des gespeicherten Benutzernamens
       const fetchUsername = async () => {
         try {
           const response = await fetch(
@@ -16,7 +15,7 @@ export default function ProfileForm() {
           );
           if (response.ok) {
             const user = await response.json();
-            setSavedUsername(user.username || ""); // Gespeicherter Username
+            setSavedUsername(user.username || "");
           }
         } catch (error) {
           console.error("Error fetching username:", error);
@@ -38,8 +37,8 @@ export default function ProfileForm() {
       });
 
       if (response.ok) {
-        setSavedUsername(username); // Willkommensnachricht aktualisieren
-        setUsername(""); // Eingabefeld leeren
+        setSavedUsername(username);
+        setUsername("");
       } else {
         console.error("Error while saving username");
       }
@@ -59,7 +58,7 @@ export default function ProfileForm() {
           Username:
           <input
             type="text"
-            value={username} // Nur für die Eingabe verwendet
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter your username"
             required

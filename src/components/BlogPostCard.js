@@ -21,10 +21,6 @@ function BlogPostCard({
 
   const userId = session?.user?.userId;
 
-  console.log("session:", session);
-  console.log("userId:", userId);
-  console.log("authorId:", authorId);
-
   useEffect(() => {
     if (!session && status !== "loading") {
       Router.push("/");
@@ -137,7 +133,6 @@ function BlogPostCard({
         )}
       </div>
 
-      {/* Nur für den Verfasser des Blogposts: Delete-Button anzeigen */}
       {session?.user?.userId === authorId && (
         <button className="button-uniform" onClick={handleDeletePost}>
           Delete Post
@@ -150,10 +145,11 @@ function BlogPostCard({
           <div key={comment._id} className="comment">
             <p>{comment.text}</p>
             <div className="comment-meta">
-              <span>Commented by {comment.authorUsername}</span>
-              <span>on {new Date(comment.createdAt).toLocaleDateString()}</span>
+              <span>
+                Commented by: {comment.authorUsername || "Anonymous"} on{" "}
+                {new Date(comment.createdAt).toLocaleDateString()}
+              </span>
             </div>
-            {/* Nur für den Verfasser des Kommentars: Delete-Button anzeigen */}
             {session?.user?.userId === comment.authorId && (
               <button
                 className="button-uniform"

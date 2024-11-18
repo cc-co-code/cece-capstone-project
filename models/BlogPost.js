@@ -13,6 +13,7 @@ const blogPostSchema = new mongoose.Schema({
     {
       text: { type: String, required: true },
       authorId: { type: String, required: true },
+      authorUsername: { type: String },
       createdAt: { type: Date, default: Date.now },
     },
   ],

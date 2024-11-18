@@ -77,9 +77,7 @@ export default function CommunityStories() {
             onChange={(e) => setAgeFilter(e.target.value)}
           />
         </label>
-        <button className="button-uniform" onClick={filterBlogPosts}>
-          Apply Filters
-        </button>
+        <button className="button-uniform">Apply Filters</button>
       </div>
 
       <section className="blogposts-section">
