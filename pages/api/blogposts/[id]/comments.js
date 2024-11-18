@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         {
           $push: {
             comments: {
-              _id: new mongoose.Types.ObjectId(), // Erzeuge explizit eine eindeutige ID
+              _id: new mongoose.Types.ObjectId(),
               text: comment,
               authorId,
               createdAt: new Date(),
@@ -36,7 +36,6 @@ export default async function handler(req, res) {
     console.log("Received commentId:", commentId);
 
     try {
-      // Suche den Post mit dem entsprechenden Kommentar
       const post = await BlogPost.findOne({
         _id: id,
         "comments._id": commentId,
@@ -46,18 +45,15 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: "Post not found" });
       }
 
-      // Finde den Kommentar innerhalb des Posts
       const comment = post.comments.find((c) => c._id.toString() === commentId);
       console.log("Comment's authorId:", comment?.authorId);
 
-      // Berechtigungsprüfung: Nur der Verfasser darf löschen
       if (!comment || comment.authorId !== userId) {
         return res
           .status(403)
           .json({ error: "Not authorized to delete this comment" });
       }
 
-      // Entferne den Kommentar, wenn die Berechtigung stimmt
       const updatedPost = await BlogPost.findByIdAndUpdate(
         id,
         { $pull: { comments: { _id: commentId } } },

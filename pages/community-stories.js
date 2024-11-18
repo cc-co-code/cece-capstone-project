@@ -94,7 +94,9 @@ export default function CommunityStories() {
               age={post.age}
               postId={post._id}
               authorId={post.authorId}
+              authorUsername={post.authorUsername}
               initialComments={post.comments || []}
+              createdAt={post.createdAt}
             />
           ))
         ) : (
