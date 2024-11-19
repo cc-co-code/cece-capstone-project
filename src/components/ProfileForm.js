@@ -5,7 +5,9 @@ export default function ProfileForm() {
   const { data: session } = useSession();
   const [username, setUsername] = useState("");
   const [savedUsername, setSavedUsername] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
+  // Fetch the saved username on mount
   useEffect(() => {
     if (session?.user?.userId) {
       const fetchUsername = async () => {
@@ -39,6 +41,7 @@ export default function ProfileForm() {
       if (response.ok) {
         setSavedUsername(username);
         setUsername("");
+        setIsEditing(false); // Exit editing mode after saving
       } else {
         console.error("Error while saving username");
       }
@@ -49,25 +52,30 @@ export default function ProfileForm() {
 
   return (
     <div className="profile-container">
-      {savedUsername && (
-        <h2 className="welcome-text">Welcome, {savedUsername}!</h2>
+      {savedUsername && !isEditing ? (
+        <div>
+          <h2 className="welcome-text">Welcome, {savedUsername}!</h2>
+          <button className="button-uniform" onClick={() => setIsEditing(true)}>
+            Edit Username
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <label>
+            Username:
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+              required
+            />
+          </label>
+          <button type="submit" className="button-uniform">
+            Save
+          </button>
+        </form>
       )}
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
-            required
-          />
-        </label>
-        <button type="submit" className="button-uniform">
-          Save
-        </button>
-      </form>
     </div>
   );
 }
