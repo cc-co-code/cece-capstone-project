@@ -11,12 +11,10 @@ export default async function handler(req, res) {
   await dbConnect();
 
   try {
-    // Finde Kommentare, die dem Benutzer gehören
     const posts = await BlogPost.find({ "comments.authorId": userId })
       .select("comments title _id")
       .lean();
 
-    // Extrahiere nur die Kommentare, die dem Benutzer gehören
     const userComments = posts.flatMap((post) =>
       post.comments
         .filter((comment) => comment.authorId === userId)
