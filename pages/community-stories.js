@@ -10,6 +10,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function CommunityStories() {
   const { data: blogPosts = [], error } = useSWR("/api/blogposts", fetcher);
   const router = useRouter();
+  const { postId } = router.query; // Query-Parameter auslesen
 
   const [cityFilter, setCityFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
@@ -17,9 +18,34 @@ export default function CommunityStories() {
 
   if (error) return <div>Failed to load posts</div>;
 
+  // Einzelnen Blogpost anzeigen, wenn `postId` vorhanden ist
+  if (postId) {
+    const selectedPost = blogPosts.find((post) => post._id === postId);
+    if (!selectedPost) return <p>Post not found.</p>;
+
+    return (
+      <div>
+        <Header />
+        <BlogPostCard
+          title={selectedPost.title}
+          content={selectedPost.content}
+          city={selectedPost.city}
+          year={selectedPost.year}
+          age={selectedPost.age}
+          postId={selectedPost._id}
+          authorId={selectedPost.authorId}
+          authorUsername={selectedPost.authorUsername}
+          initialComments={selectedPost.comments || []}
+          createdAt={selectedPost.createdAt}
+        />
+        <Footer />
+      </div>
+    );
+  }
+
+  // Filter-Logik für die Blogpost-Liste
   const filterBlogPosts = () => {
     if (!Array.isArray(blogPosts)) return [];
-
     return blogPosts.filter((post) => {
       const cityMatch = cityFilter
         ? post.city.toLowerCase().includes(cityFilter.toLowerCase())

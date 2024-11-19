@@ -714,6 +714,61 @@ textarea:focus {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+/* Für die Liste der Blogposts und Kommentare */
+.profile-container ul {
+  list-style: none; /* Entfernt die Standardpunkte */
+  padding: 0; /* Entfernt den linken Padding */
+  margin: 0; /* Entfernt extra Abstand */
+}
+
+.profile-container li {
+  margin-bottom: 1rem; /* Abstand zwischen den Listenelementen */
+  padding: 1rem;
+  background-color: var(--background-light);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-container li a {
+  text-decoration: none; /* Entfernt die Unterstreichung */
+  color: var(--primary); /* Hebt Links farblich hervor */
+  font-weight: bold; /* Macht den Text fett */
+}
+
+.profile-container li a:hover {
+  text-decoration: underline; /* Unterstreicht beim Hover */
+}
+
+/* Zusätzliche Styles für kleine Texte wie Datum oder zusätzliche Infos */
+.profile-container small {
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+/* Überschriften für Listenabschnitte */
+.profile-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--secondary);
+}
+
+/* Optional: Style für Kommentare */
+.profile-container .comment-text {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+@media (min-width: 768px) {
+  .profile-container ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Zwei Spalten */
+    gap: 1rem; /* Abstand zwischen den Elementen */
+  }
+}
+
 .intro-section {
   margin-bottom: 20px;
   padding: 15px;
