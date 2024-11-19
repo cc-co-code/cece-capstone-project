@@ -2,15 +2,13 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useState } from "react";
 import BlogPostCard from "@/src/components/BlogPostCard";
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function CommunityStories() {
   const { data: blogPosts = [], error } = useSWR("/api/blogposts", fetcher);
   const router = useRouter();
-  const { postId } = router.query; // Query-Parameter auslesen
+  const { postId } = router.query;
 
   const [cityFilter, setCityFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
@@ -18,14 +16,12 @@ export default function CommunityStories() {
 
   if (error) return <div>Failed to load posts</div>;
 
-  // Einzelnen Blogpost anzeigen, wenn `postId` vorhanden ist
   if (postId) {
     const selectedPost = blogPosts.find((post) => post._id === postId);
     if (!selectedPost) return <p>Post not found.</p>;
 
     return (
       <div>
-        <Header />
         <BlogPostCard
           title={selectedPost.title}
           content={selectedPost.content}
@@ -38,12 +34,10 @@ export default function CommunityStories() {
           initialComments={selectedPost.comments || []}
           createdAt={selectedPost.createdAt}
         />
-        <Footer />
       </div>
     );
   }
 
-  // Filter-Logik für die Blogpost-Liste
   const filterBlogPosts = () => {
     if (!Array.isArray(blogPosts)) return [];
     return blogPosts.filter((post) => {
@@ -60,7 +54,6 @@ export default function CommunityStories() {
 
   return (
     <div>
-      <Header />
       <section className="info-section">
         <h2>Welcome to Community Stories</h2>
         <p>
@@ -127,8 +120,6 @@ export default function CommunityStories() {
           <p>No posts found.</p>
         )}
       </section>
-
-      <Footer />
     </div>
   );
 }

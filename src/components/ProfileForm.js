@@ -90,71 +90,93 @@ export default function ProfilePage() {
     }
   };
 
+  if (!session) {
+    return (
+      <div className="profile-container">
+        <p>Please sign in to view your profile.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="profile-container">
-      {/* Welcome Section */}
-      {savedUsername && !isEditing ? (
-        <div>
-          <h2 className="welcome-text">Welcome, {savedUsername}!</h2>
-          <button className="button-uniform" onClick={() => setIsEditing(true)}>
-            Edit Username
-          </button>
+      <section className="profile-content">
+        {/* Profile Section */}
+        <div className="profile-section">
+          {savedUsername && !isEditing ? (
+            <div>
+              <h2>Welcome, {savedUsername}!</h2>
+              <button
+                className="button-uniform"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Username
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSaveUsername} className="profile-form">
+              <div>
+                <label htmlFor="username">Username:</label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your username"
+                  required
+                />
+              </div>
+              <button type="submit" className="button-uniform">
+                Save Username
+              </button>
+            </form>
+          )}
         </div>
-      ) : (
-        <form onSubmit={handleSaveUsername}>
-          <label>
-            Username:
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              required
-            />
-          </label>
-          <button type="submit" className="button-uniform">
-            Save
-          </button>
-        </form>
-      )}
 
-      {/* Blogposts Section */}
-      <section>
-        <h2>Your Blogposts</h2>
-        {posts.length > 0 ? (
-          <ul>
-            {posts.map((post) => (
-              <li key={post._id}>
-                <a href={`/community-stories?postId=${post._id}`}>
-                  {post.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>You haven't written any blogposts yet.</p>
-        )}
-      </section>
-
-      {/* Comments Section */}
-      <section>
-        <h2>Your Comments</h2>
-        {comments.length > 0 ? (
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment._id}>
-                <p>{comment.text}</p>
-                <small>
-                  <a href={`/community-stories?postId=${comment.postId}`}>
-                    View Comment
+        {/* Blogposts Section */}
+        <section>
+          <h2>Your Blogposts</h2>
+          {posts.length > 0 ? (
+            <ul>
+              {posts.map((post) => (
+                <li key={post._id}>
+                  <a href={`/community-stories?postId=${post._id}`}>
+                    {post.title}
                   </a>
-                </small>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>You haven't commented on any posts yet.</p>
-        )}
+                  <small>
+                    {" "}
+                    - {new Date(post.createdAt).toLocaleDateString()}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>You haven't written any blogposts yet.</p>
+          )}
+        </section>
+
+        {/* Comments Section */}
+        <section>
+          <h2>Your Comments</h2>
+          {comments.length > 0 ? (
+            <ul>
+              {comments.map((comment) => (
+                <li key={comment._id}>
+                  <p className="comment-text">{comment.text}</p>
+                  <small>
+                    <a href={`/community-stories?postId=${comment.postId}`}>
+                      View Post
+                    </a>
+                    {" - "}
+                    {new Date(comment.createdAt).toLocaleDateString()}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>You haven't commented on any posts yet.</p>
+          )}
+        </section>
       </section>
     </div>
   );

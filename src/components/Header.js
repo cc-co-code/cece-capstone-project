@@ -1,90 +1,124 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import React from "react";
+import Link from "next/link";
 import {
-  GlobeAltIcon,
-  ArrowRightEndOnRectangleIcon,
+  HomeIcon,
+  BookOpenIcon,
+  UsersIcon,
   UserCircleIcon,
+  ArrowRightEndOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
-import Link from "next/link";
 
 function Header() {
   const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [language, setLanguage] = useState("en");
+  const [isMobile, setIsMobile] = useState(false);
   const { data: session } = useSession();
 
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-  const navigateAndCloseMenu = (path) => {
-    router.push(path);
-    setMenuOpen(false);
-  };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-  const toggleLanguage = () => {
-    setLanguage((prevLang) => (prevLang === "en" ? "de" : "en"));
-    console.log(`Language changed to: ${language}`);
-  };
+  const NavLinks = [
+    { href: "/", label: "Home", icon: HomeIcon },
+    { href: "/resources", label: "Resources", icon: BookOpenIcon },
+    { href: "/community-stories", label: "Community", icon: UsersIcon },
+  ];
 
-  return (
-    <header className="header">
+  const DesktopNavigation = () => (
+    <div className="desktop-navigation">
       <Link href="/" className="header-logo">
         ALBY
       </Link>
-
-      <button className="header-language-toggle" onClick={toggleLanguage}>
-        <GlobeAltIcon className="icon" height={24} width={24} />
-      </button>
-
-      <button onClick={toggleMenu} className="menu-toggle">
-        ☰
-      </button>
-
-      {menuOpen && (
-        <nav className="dropdown-menu">
-          <button onClick={() => navigateAndCloseMenu("/")}>Home</button>
-          <button onClick={() => navigateAndCloseMenu("/community-stories")}>
-            Community Stories
-          </button>
-          <button onClick={() => navigateAndCloseMenu("/about")}>About</button>
-          <button onClick={() => navigateAndCloseMenu("/resources")}>
-            Resources
-          </button>
-
-          {session ? (
-            <>
-              <button
-                onClick={() => navigateAndCloseMenu("/profile")}
-                className="dropdown-item"
-              >
-                <UserCircleIcon className="icon" height={18} width={18} />
-                Profile
-              </button>
-              <button onClick={() => signOut()} className="dropdown-item">
-                <ArrowRightEndOnRectangleIcon
-                  className="icon"
-                  height={18}
-                  width={18}
-                />
-                Logout
-              </button>
-            </>
-          ) : (
-            <button onClick={() => signIn()} className="dropdown-item">
+      <nav className="nav-links">
+        {NavLinks.map((link) => (
+          <Link key={link.href} href={link.href} className="nav-link">
+            <link.icon className="icon" height={18} width={18} />
+            {link.label}
+          </Link>
+        ))}
+        {session ? (
+          <>
+            <Link href="/profile" className="nav-link">
+              <UserCircleIcon className="icon" height={18} width={18} />
+              Profile
+            </Link>
+            <button onClick={() => signOut()} className="nav-link">
               <ArrowRightEndOnRectangleIcon
                 className="icon"
                 height={18}
                 width={18}
               />
-              Login
+              Logout
+            </button>
+          </>
+        ) : (
+          <button onClick={() => signIn()} className="nav-link">
+            <ArrowRightEndOnRectangleIcon
+              className="icon"
+              height={18}
+              width={18}
+            />
+            Login
+          </button>
+        )}
+      </nav>
+    </div>
+  );
+
+  return (
+    <>
+      <header className="header">
+        {isMobile && (
+          <Link href="/" className="header-logo">
+            ALBY
+          </Link>
+        )}
+        {!isMobile && <DesktopNavigation />}
+      </header>
+
+      {isMobile && (
+        <nav className="mobile-navigation">
+          {NavLinks.map((link) => (
+            <Link key={link.href} href={link.href} className="mobile-nav-link">
+              <link.icon className="icon" height={24} width={24} />
+              <span>{link.label}</span>
+            </Link>
+          ))}
+          {session ? (
+            <>
+              <Link href="/profile" className="mobile-nav-link">
+                <UserCircleIcon className="icon" height={24} width={24} />
+                <span>Profile</span>
+              </Link>
+              <button onClick={() => signOut()} className="mobile-nav-link">
+                <ArrowRightEndOnRectangleIcon
+                  className="icon"
+                  height={24}
+                  width={24}
+                />
+                <span>Logout</span>
+              </button>
+            </>
+          ) : (
+            <button onClick={() => signIn()} className="mobile-nav-link">
+              <ArrowRightEndOnRectangleIcon
+                className="icon"
+                height={24}
+                width={24}
+              />
+              <span>Login</span>
             </button>
           )}
         </nav>
       )}
-    </header>
+    </>
   );
 }
 
