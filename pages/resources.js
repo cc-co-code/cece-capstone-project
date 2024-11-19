@@ -4,6 +4,20 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import ArticlePreview from "@/src/components/ArticlePreview";
 
+// Introtexte für Kategorien
+const categoryIntros = {
+  "Legal Aspects":
+    "Learn about the legal framework and rights surrounding abortion in different regions.",
+  "Medical Information":
+    "Find reliable medical information about procedures, safety, and aftercare.",
+  "Psychological Support":
+    "Access resources to help with emotional and mental health during this time.",
+  "Support Services":
+    "Explore organizations offering support and guidance tailored to your needs.",
+  "Educational Information":
+    "Discover detailed guides, FAQs, and educational materials related to abortion.",
+};
+
 const ResourcesPage = () => {
   const [resources, setResources] = useState([]);
   const router = useRouter();
@@ -65,29 +79,6 @@ const ResourcesPage = () => {
           const resources = groupedResources[categoryName];
           if (!resources) return null;
 
-          if (categoryName === "Educational Information") {
-            return (
-              <div key={categoryName}>
-                <section
-                  id={categoryName.toLowerCase().replace(" ", "-")}
-                  className={`resource-section ${
-                    activeCategory === categoryName ? "highlight" : ""
-                  }`}
-                >
-                  <h2>{categoryName}</h2>
-                  {resources.map((resource) => (
-                    <ArticlePreview
-                      key={resource._id}
-                      title={resource.title}
-                      excerpt={resource.excerpt}
-                      link={resource.link}
-                    />
-                  ))}
-                </section>
-              </div>
-            );
-          }
-
           return (
             <section
               key={categoryName}
@@ -97,6 +88,7 @@ const ResourcesPage = () => {
               }`}
             >
               <h2>{categoryName}</h2>
+              <p className="category-intro">{categoryIntros[categoryName]}</p>
               {resources.map((resource) => (
                 <ArticlePreview
                   key={resource._id}
@@ -114,4 +106,5 @@ const ResourcesPage = () => {
     </div>
   );
 };
+
 export default ResourcesPage;
