@@ -1,10 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
+
 import ArticlePreview from "@/src/components/ArticlePreview";
 
-// Introtexte für Kategorien
 const categoryIntros = {
   "Legal Aspects":
     "Learn about the legal framework and rights surrounding abortion in different regions.",
@@ -65,7 +63,6 @@ const ResourcesPage = () => {
 
   return (
     <div className="page-container">
-      <Header />
       <h2>Resources & Articles</h2>
       <p className="info-section">
         Welcome to the Resources Section. Here you can browse through curated
@@ -101,8 +98,6 @@ const ResourcesPage = () => {
           );
         })}
       </div>
-
-      <Footer />
     </div>
   );
 };

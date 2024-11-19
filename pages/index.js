@@ -1,37 +1,12 @@
 import React from "react";
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
-import WelcomeText from "@/src/components/WelcomeText";
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
-import Button from "@/src/components/Button";
+import { useSession } from "next-auth/react";
 import ArticlePreview from "@/src/components/ArticlePreview";
+import WelcomeText from "@/src/components/WelcomeText";
 
 const LandingPage = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
-
-  const handleResourcesClick = () => {
-    console.log("Navigate to Resources & Articles");
-    router.push("/resources");
-  };
-
-  const handleCommunityClick = () => {
-    console.log("Button clicked, checking status...");
-
-    if (status === "loading") {
-      console.log("Authentication status is loading...");
-      return;
-    }
-
-    if (status === "authenticated") {
-      console.log("User is authenticated, navigating to /community-stories");
-      router.push("/community-stories");
-    } else {
-      console.log("User not authenticated, redirecting to sign-in page");
-      signIn({ callbackUrl: "/community-stories" });
-    }
-  };
 
   const handleCategoryClick = (category) => {
     router.push(`/resources?category=${encodeURIComponent(category)}`);
@@ -39,17 +14,11 @@ const LandingPage = () => {
 
   return (
     <div className="page-container">
-      <Header />
       <main className="content">
         <WelcomeText />
-        <div className="button-container">
-          <Button text="Resources & Articles" onClick={handleResourcesClick} />
-          <Button text="Community Stories" onClick={handleCommunityClick} />
-        </div>
         <section className="categories-section">
           <h2>Explore Resources</h2>
           <div className="categories-container">
-            {/* Legal Aspects */}
             <div
               className="category-card"
               onClick={() => handleCategoryClick("Legal Aspects")}
@@ -63,7 +32,6 @@ const LandingPage = () => {
               />
             </div>
 
-            {/* Medical Information */}
             <div
               className="category-card"
               onClick={() => handleCategoryClick("Medical Information")}
@@ -77,7 +45,6 @@ const LandingPage = () => {
               />
             </div>
 
-            {/* Psychological Support */}
             <div
               className="category-card"
               onClick={() => handleCategoryClick("Psychological Support")}
@@ -91,7 +58,6 @@ const LandingPage = () => {
               />
             </div>
 
-            {/* Support Services */}
             <div
               className="category-card"
               onClick={() => handleCategoryClick("Support Services")}
@@ -107,7 +73,6 @@ const LandingPage = () => {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 };
