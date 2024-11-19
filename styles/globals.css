@@ -1,12 +1,12 @@
 :root {
-  --background-light: #fdfdfd; /* Neutrales Weiß */
-  --background-dark: #2c2c34; /* Dunkler Kontrast */
-  --primary: #006d77; /* Dezentes Grünblau */
-  --secondary: #b8d8e0; /* Subtiles Blau mit grauem Unterton */
-  --highlight: #ff4d6d; /* Auffälliges Rot */
-  --text-light: #2c2c34; /* Dunkler Text für helle Hintergründe */
-  --text-dark: #fdfdfd; /* Heller Text für dunkle Hintergründe */
-  --border-color: #fbf4db; /* Helles Grau für Abgrenzungen */
+  --background-light: #f8f9fa; /* Light Gray */
+  --background-dark: #2c2c34; /* Raisin Black */
+  --primary: #667786; /* Subtle Gray */
+  --secondary: #55a880; /* Poppy */
+  --highlight: #db5759; /* Subtle Orange */
+  --text-light: #343a40; /* Dark Gray */
+  --text-dark: #ffffff; /* White */
+  --border-color: #ced4da; /* Soft Border Gray */
   --font-family: "Inter", sans-serif;
 
   --transition-speed: 0.3s ease-in-out;
@@ -119,6 +119,7 @@ textarea:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 0px;
   margin-bottom: 20px;
+  z-index: 10;
 }
 
 .header-logo {
@@ -211,23 +212,21 @@ textarea:focus {
 }
 
 .button-uniform {
-  background-color: var(--secondary);
-  color: var(--text-light);
+  background-color: var(--primary);
+  color: var(--text-dark);
   font-size: 1rem;
-  padding: 8px 16px; /* Innenabstand für gleichmäßige Größe */
-  border: none;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
   cursor: pointer;
   text-align: center;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-
-  white-space: nowrap; /* Verhindert Zeilenumbrüche im Button */
-  display: inline-block; /* Passt die Größe an den Inhalt an */
-  min-width: max-content; /* Stellt sicher, dass der Button nicht kleiner als der Text ist */
+  transition: background-color var(--transition-speed),
+    transform var(--transition-speed);
 }
 
 .button-uniform:hover {
-  background-color: var(--border-color);
+  background-color: var(--highlight);
+  color: var(--text-light);
   transform: scale(1.05);
 }
 
@@ -235,6 +234,7 @@ textarea:focus {
   background-color: var(--border-color);
   cursor: not-allowed;
 }
+
 .button-container {
   display: flex;
   gap: 1rem;
@@ -660,14 +660,14 @@ textarea:focus {
   text-align: left;
 }
 
-.profile-container {
+/* .profile-container {
   max-width: 600px;
   margin-right: auto;
   padding: 2rem;
   background-color: var(--background-light);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+}*/
 .welcome-text {
   margin-bottom: 20px;
   padding: 15px;
@@ -680,12 +680,12 @@ textarea:focus {
   line-height: 1.8;
 }
 
-.profile-container h1 {
+/* .profile-container h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: var(--secondary);
+  color: var(--text-light);
   text-align: center;
-}
+} */
 .profile-content {
   flex: 1;
   padding: 2rem;
@@ -714,15 +714,15 @@ textarea:focus {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-/* Für die Liste der Blogposts und Kommentare */
+/* 
 .profile-container ul {
-  list-style: none; /* Entfernt die Standardpunkte */
-  padding: 0; /* Entfernt den linken Padding */
-  margin: 0; /* Entfernt extra Abstand */
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
 }
 
 .profile-container li {
-  margin-bottom: 1rem; /* Abstand zwischen den Listenelementen */
+  margin-bottom: 1rem; 
   padding: 1rem;
   background-color: var(--background-light);
   border-radius: 8px;
@@ -730,29 +730,76 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
+} */
 
 .profile-container li a {
-  text-decoration: none; /* Entfernt die Unterstreichung */
-  color: var(--primary); /* Hebt Links farblich hervor */
-  font-weight: bold; /* Macht den Text fett */
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: bold;
 }
 
 .profile-container li a:hover {
-  text-decoration: underline; /* Unterstreicht beim Hover */
+  text-decoration: underline;
+}
+.profile-container {
+  width: 100%;
+  max-width: 800px; /* Maximale Breite */
+  margin: 2rem 2rem 10%;
+  padding: 2rem;
+  background-color: var(--secondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+}
+@media (max-width: 1200px) {
+  .profile-container {
+    max-width: 90%; /* Auf kleineren Bildschirmen breiter */
+  }
 }
 
-/* Zusätzliche Styles für kleine Texte wie Datum oder zusätzliche Infos */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1.5rem; /* Weniger Padding für Mobilgeräte */
+    max-width: 100%; /* Auf Mobilgeräten die volle Breite nutzen */
+  }
+}
+
+.welcome-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.profile-container h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-light);
+}
+
+.profile-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-container li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .profile-container small {
   color: var(--text-light);
   font-size: 0.85rem;
 }
 
-/* Überschriften für Listenabschnitte */
 .profile-container h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--secondary);
+  color: var(--text-light);
 }
 
 /* Optional: Style für Kommentare */
@@ -764,8 +811,8 @@ textarea:focus {
 @media (min-width: 768px) {
   .profile-container ul {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Zwei Spalten */
-    gap: 1rem; /* Abstand zwischen den Elementen */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 }
 
