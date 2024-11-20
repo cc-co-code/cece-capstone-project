@@ -3,10 +3,8 @@ import React from "react";
 const ArticlePreview = ({ title, excerpt, link, anchor, category }) => {
   const handleClick = () => {
     if (anchor) {
-      // Navigiert zu einem Ankerpunkt
       window.location.href = `/resources?category=${encodeURI(category)}`;
     } else if (link) {
-      // Öffnet den Link in einem neuen Tab
       window.open(link, "_blank", "noopener noreferrer");
     }
   };
